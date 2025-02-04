@@ -29,7 +29,6 @@ const onSubmit = async (e:FormEvent) => {
     const firebaseErrors = err as FirebaseError
     console.log(firebaseErrors.message)
     setErrorMessage(firebaseErrors.message)
-    // setErrorMessage(err.code);
   }
 }
 

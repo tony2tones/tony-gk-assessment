@@ -1,9 +1,9 @@
 
 "use client"; 
 
-import { useEffect, useState } from "react";
+import { FormEvent, useEffect, useState } from "react";
 import { useParams } from "next/navigation";
-import { doc, getDoc } from "firebase/firestore";
+import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/app/utils/firebaseConfig";
 
 type User = {
@@ -16,8 +16,9 @@ type User = {
 
 export default function ProfilePage() {
   const { slug } = useParams() as { slug: string };
-  const [user, setUser] = useState<User | undefined>(undefined);
+  const [userData, setUserData] = useState<User>({fullName: '',email:'',bio:'', id:''});
   const [loading, setLoading] = useState(true);
+  const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
     if (!slug || Array.isArray(slug)) return; 
@@ -30,7 +31,7 @@ export default function ProfilePage() {
         if (userSnap.exists()) {
           const userData = userSnap.data(); 
           
-          setUser({
+          setUserData({
             id: userSnap.id,
             fullName: userData.fullName || "", 
             email: userData.email || "",
@@ -45,22 +46,76 @@ export default function ProfilePage() {
         setLoading(false);
       }
     }
-  
     fetchUser();
   }, [slug]);
+
+  const toggleEditMode =() => {
+    setEditMode((prev) => prev = !editMode);
+  }
+
+  const handleChange = (e: { target: { name: any; value: any; }; }) => {
+    const {name, value} = e.target;
+    setUserData((prev) => ({
+      ...prev,
+      [name]: value,
+    }));
+  };
   
 
   if (loading) return <div>Loading...</div>;
 
+  const handleSubmit = async (e:FormEvent) => {
+    e.preventDefault();
+    try {
+      const userRef = doc(db,"users", slug);
+      await updateDoc(userRef,userData);
+      setUserData(userData);
+      setEditMode(false)
+    } catch (error) {
+      console.log('ERROR',error)
+    }
+  }
+
   return (
-    <div className="min-h-screen flex items-center justify-center bg-gray-200">
-      {user ? (
-        
+    <div className="min-h-screen flex flex-col items-center justify-center bg-gray-200">
+      <h1>Welcome back {userData.fullName.split(' ')[0]}</h1>
+
+      {userData && editMode ? (
+        <div className="flex flex-col gap-4 w-96">
+         <form onSubmit={handleSubmit}>
+          <div className="flex flex-col">
+      <label>
+        Full Name:
+        </label>
+        <input
+          type="text"
+          name="fullName"
+          value={userData.fullName}
+          onChange={handleChange}
+        />
+      </div>
+      <br />
+      <div className="flex flex-col">
+      <label>
+        Bio:
+        </label>
+        <input
+          type="text"
+          name="bio"
+          value={userData.bio}
+          onChange={handleChange}
+        />
+        </div>
+      <br />
+      <button type="submit" className="w-full">Update details</button>
+      </form>
+      </div>
+      ) :
+      userData && !editMode ? (
         <div>
-        <h1>Welcome back {user.fullName.split(' ')[0]}</h1>
-          <p>Name: {user.fullName}</p>
-          <p>Bio: {user.bio}</p>
-          <button>Update details?</button>
+          <p>Name: {userData.fullName}</p>
+          <p>Bio: {userData.bio}</p>
+          <button onClick={toggleEditMode}>Update details?</button>
         </div>
       ) : (
         <p>User not found</p>
