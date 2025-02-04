@@ -50,7 +50,7 @@ const navToSignUp =() => {
           placeholder='Please enter email'
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className='w-full p-3 mb-4 bg-gray-700 rounded outline-none text-white placeholder-gray-500'
+          className='w-full p-3 mb-4 bg-slate-100 rounded outline-none text-white placeholder-gray-500'
         />
       </div>
       <div>
@@ -60,7 +60,7 @@ const navToSignUp =() => {
           placeholder='Please enter email'
           value={password}
           onChange={(e) => setPassword(e.target.value)}
-          className='w-full p-3 mb-4 bg-gray-700 rounded outline-none text-white placeholder-gray-500'
+          className='w-full p-3 mb-4 bg-slate-100 rounded outline-none text-white placeholder-gray-500'
           />
           {errorMessage && <p className='text-red-700 font-semibold'>{errorMessage}</p>}
           <div className='flex justify-between'>
