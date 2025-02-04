@@ -2,7 +2,7 @@
 
 import { useAuthState} from 'react-firebase-hooks/auth'
 import { signOut } from "firebase/auth";
-import { auth } from './utils/firebaseConfig';
+import { auth } from '@/app/utils/firebaseConfig';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
 import Link from 'next/link';
@@ -12,7 +12,7 @@ import { db } from '@/app/utils/firebaseConfig';
 const docRef = doc(db, "users", "tony");
 const docSnap = await getDoc(docRef);
 
-const Landing = () => {
+const Dashboard = () => {
   const [user, loading] = useAuthState(auth);
   const router = useRouter();
 
@@ -35,9 +35,9 @@ const Landing = () => {
   }
 
   return (
-    <div className="w-full flex justify-center ">
-    <div className="m-3 bg-gray-500 p-4">
-        <button onClick={() => signOut(auth)} className="bg-red-500 px-4 py-2 text-white">Logout</button>
+    <div className="w-full flex m-3 bg-gray-500 p-4 ">
+    <div className="">
+        {/* <button onClick={() => signOut(auth)} className="bg-zinc-400 px-4 py-2 text-white">Logout</button> */}
         <div className="bg-slate-400">
         <h1 className="text-xl">Dashboard</h1>
         <p><strong>User ID:</strong> {user.uid}</p>
@@ -50,4 +50,4 @@ const Landing = () => {
   );
 }
 
-export default Landing;
+export default Dashboard;

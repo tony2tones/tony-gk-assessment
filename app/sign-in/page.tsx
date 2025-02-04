@@ -22,10 +22,9 @@ const SignIn = () => {
   const [errorMessage, setErrorMessage] = useState('');
 const onSubmit = async (e:FormEvent) => {
   e.preventDefault();
-  console.log('register');
   try {
     await login(email, password);
-    router.push('/');
+    router.push('/dashboard');
   } catch (err) {
     const firebaseErrors = err as FirebaseError
     console.log(firebaseErrors.message)
@@ -65,7 +64,7 @@ const navToSignUp =() => {
           {errorMessage && <p className='text-red-700 font-semibold'>{errorMessage}</p>}
           <div className='flex justify-between'>
       <button type='submit' className='bg-sky-400'>Sign in</button>
-        <button type='button' className='' onClick={navToSignUp}>Need to signed up?</button>
+        <button type='button' onClick={navToSignUp}>Need to signed up?</button>
         </div>
         </div>
       </form>
