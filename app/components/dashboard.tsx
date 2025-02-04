@@ -22,8 +22,8 @@ const Dashboard = () => {
 
   return (
 
-    <div className="min-h-screen flex flex-col items-center justify-center bg-white shadow-md">
-      <div className='bg-slate-100 p-4 rounded-md'>
+    <div className="container mt-9 flex flex-col items-center justify-center bg-white shadow-md">
+      <div className='bg-slate-100 p-4 rounded-md shadow-cyan-600 shadow-lg'>
         <ProfileWidget uid={user.uid} email={user.email} />
       </div>
     </div>

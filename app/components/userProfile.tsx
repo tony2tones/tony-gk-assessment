@@ -1,4 +1,3 @@
-
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
@@ -6,17 +5,13 @@ import { useParams } from "next/navigation";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/app/utils/firebaseConfig";
 import toast from "react-hot-toast";
+import { User } from "../constants/user";
+import {  Loader2 } from "lucide-react";
 
-type User = {
-  id: string;
-  fullName: string;
-  email: string;
-  bio: string;
-};
 
 export default function ProfilePage() {
   const { slug } = useParams() as { slug: string };
-  const [userData, setUserData] = useState<User>({ fullName: '', email: '', bio: '', id: '' });
+  const [userData, setUserData] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
 
@@ -30,7 +25,6 @@ export default function ProfilePage() {
 
         if (userSnap.exists()) {
           const userData = userSnap.data();
-
           setUserData({
             id: userSnap.id,
             fullName: userData.fullName || "",
@@ -39,56 +33,70 @@ export default function ProfilePage() {
           });
         } else {
           console.log("User not found");
+          setUserData(null);
         }
       } catch (error) {
         console.error("Error fetching user:", error);
+        setUserData(null);
       } finally {
         setLoading(false);
       }
     }
+
     fetchUser();
   }, [slug]);
 
-  const toggleEditMode = () => {
-    setEditMode((prev) => prev = !editMode);
-  }
+  const toggleEditMode = () => setEditMode((prev) => !prev);
 
-  const handleChange = (e: { target: { name: string; value: string; }; }) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { name, value } = e.target;
-    setUserData((prev) => ({
-      ...prev,
-      [name]: value,
-    }));
+    setUserData((prev) => (prev ? { ...prev, [name]: value } : prev));
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (!userData) return;
+
     try {
       const userRef = doc(db, "users", slug);
       await updateDoc(userRef, userData);
-      setUserData(userData);
-      setEditMode(false)
-      toast.success('Your profile has been successfully update!');
+      toast.success("Your profile has been successfully updated!");
+      setEditMode(false);
+
     } catch (error) {
-      console.log('ERROR', error)
+      toast.error(`An error has occurred updated! ${error}`);
     }
+  };
+
+  if (loading) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <Loader2 />
+      </div>
+    );
+  }
+
+  if (!userData) {
+    return (
+      <div className="min-h-screen flex items-center justify-center bg-gray-200">
+        <p>User not found</p>
+      </div>
+    );
   }
 
   return (
-    <div className="min-h-full mt-[-4rem] flex flex-col items-center justify-center bg-gray-200">
-      <h1>Welcome back {userData.fullName.split(' ')[0]}</h1>
-
-      {userData && editMode ? (
+    <section className="h-96 flex flex-col items-center mt-10 ">
+      <div >
+      <h1>Welcome back, {userData?.fullName.split(" ")[0] || 'Name'}</h1>
+      {editMode ? (
         <div className="flex flex-col gap-4 w-96">
           <form onSubmit={handleSubmit}>
             <div className="flex flex-col">
-              <label>
-                Full Name:
-              </label>
+              <label>Full Name:</label>
               <input
                 type="text"
                 name="fullName"
-                value={userData.fullName}
+                value={userData?.fullName}
                 maxLength={150}
                 required
                 onChange={handleChange}
@@ -96,32 +104,30 @@ export default function ProfilePage() {
             </div>
             <br />
             <div className="flex flex-col">
-              <label>
-                Bio:
-              </label>
+              <label>Bio:</label>
               <input
                 type="text"
                 name="bio"
-                value={userData.bio}
+                value={userData?.bio}
                 maxLength={200}
                 required
                 onChange={handleChange}
               />
             </div>
             <br />
-            <button type="submit" className="w-full">Update details</button>
+            <button type="submit" className="w-full border-2">
+              {loading ? 'Loading please wait': 'Update details'}
+            </button>
           </form>
         </div>
-      ) :
-        userData && !editMode ? (
-          <div className="flex flex-col gap-4 w-96">
-            <p>Name: {userData.fullName}</p>
-            <p>Bio: {userData.bio}</p>
-            <button onClick={toggleEditMode}>Update details?</button>
-          </div>
-        ) : (
-          <p>User not found</p>
-        )}
-    </div>
+      ) : (
+        <div className="flex flex-col gap-4 w-96">
+          <p>Name: {userData?.fullName}</p>
+          <p>Bio: {userData?.bio}</p>
+          <button onClick={toggleEditMode}>Update details?</button>
+        </div>
+      )}
+      </div>
+    </section>
   );
 }

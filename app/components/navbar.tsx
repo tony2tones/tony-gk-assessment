@@ -11,6 +11,10 @@ export default function NavBar() {
   const [user, loading] = useAuthState(auth);
   const [hydrated, setHydrated] = useState(false);
 
+  function navToDashboard() {
+    router.push('/dashboard');
+  }
+
   useEffect(() => {
     setHydrated(true);
     if (!user && !loading) {
@@ -21,16 +25,19 @@ export default function NavBar() {
   if (!hydrated) return null; // Prevents SSR from rendering inconsistent UI
 
   return (
-    <nav className="w-full bg-white text-black shadow-md hover:shadow-lg transition h-14 flex items-center px-6 border-b border-gray-300">
+    <nav className="w-full bg-white text-black transition h-12 flex items-center px-5 pt-5 0">
       <div className="flex justify-between items-center w-full">
-        <Link href="/dashboard" className="text-xl font-semibold tracking-wide no-underline text-slate-900 hover:bg-gray-200 transition">
+      <button
+              onClick={() => navToDashboard()}
+              className="text-xl font-semibold tracking-wide  text-slate-900 hover:bg-slate-900 transition"
+            >
           Dashboard
-        </Link>
+        </button>
         {user && (
           <div className="flex items-center gap-8">
             <button
               onClick={() => signOut(auth)}
-              className="bg-white border border-black text-black hover:bg-gray-200 px-4 py-1 rounded-md transition"
+              className="text-xl font-semibold tracking-wide  text-slate-900 hover:bg-slate-900 transition"
             >
               Logout
             </button>
