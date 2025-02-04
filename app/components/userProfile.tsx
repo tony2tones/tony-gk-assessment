@@ -61,9 +61,6 @@ export default function ProfilePage() {
     }));
   };
 
-
-  if (loading) return <div>Loading...</div>;
-
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
     try {

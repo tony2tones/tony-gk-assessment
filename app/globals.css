@@ -1,7 +1,6 @@
-@tailwind base;
-@tailwind components;
-@tailwind utilities;
-
+@import 'tailwindcss/base';
+@import 'tailwindcss/components';
+@import 'tailwindcss/utilities';
 /* Root Variables */
 :root {
   --background: #ffffff;
@@ -99,4 +98,56 @@ button:hover {
   max-width: 1200px;
   margin: 0 auto;
   padding: 1rem;
+}
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+}
+
+/* Mobile styles */
+@media screen and (max-width: 599px) {
+  /* Styles for mobile devices (portrait) */
+  .container {
+    padding: 10px;
+  }
+}
+
+/* Tablet styles */
+@media screen and (min-width: 600px) and (max-width: 899px) {
+  /* Styles for tablets (portrait and landscape) */
+  .container {
+    padding: 20px;
+  }
+}
+
+/* Laptop styles */
+@media screen and (min-width: 900px) and (max-width: 1199px) {
+  /* Styles for laptops */
+  .container {
+    padding: 30px;
+  }
+}
+
+/* Desktop styles */
+@media screen and (min-width: 1200px) {
+  /* Styles for large desktops */
+  .container {
+    padding: 40px;
+  }
+}
+
+/* Very large desktop (extra-wide screens) */
+@media screen and (min-width: 1600px) {
+  /* Styles for ultra-large screens */
+  .container {
+    padding: 50px;
+  }
 }
