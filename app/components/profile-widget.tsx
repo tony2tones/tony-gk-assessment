@@ -16,7 +16,7 @@ const ProfileWidget = ({uid, email}:widgetDetails ) => {
     <section className='flex gap-11'>
           <div>
             <h1 className="text-xl">User profile</h1>
-
+            <h3>Your credentials</h3>
             <p><strong>User ID:</strong> {uid}</p>
             <p><strong>Email:</strong> {email ? email : 'No email found'}</p>
             <div className='flex gap-3'>
