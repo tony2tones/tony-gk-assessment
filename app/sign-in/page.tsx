@@ -4,21 +4,13 @@ import {FormEvent, useState} from 'react';
 import { useRouter } from 'next/navigation';
 import {login} from '../utils/firebaseConfig';
 import toast from 'react-hot-toast';
-
-type FirebaseError = {
-  code: number;
-  message: string;
-  errors?: {
-    message: string;
-    domain: string;
-    reason: string;
-  }[];
-};
+import { FirebaseError } from '../constants/firebase';
 
 const SignIn = () => {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+
 const onSubmit = async (e:FormEvent) => {
   e.preventDefault();
   try {
