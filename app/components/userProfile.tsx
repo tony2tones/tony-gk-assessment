@@ -75,7 +75,7 @@ export default function ProfilePage() {
   }
 
   return (
-    <div className="min-h-full flex flex-col items-center justify-center bg-gray-200">
+    <div className="min-h-full mt-[-4rem] flex flex-col items-center justify-center bg-gray-200">
       <h1>Welcome back {userData.fullName.split(' ')[0]}</h1>
 
       {userData && editMode ? (
