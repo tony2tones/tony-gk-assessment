@@ -1,7 +1,6 @@
 'use client'
 
 import { useAuthState} from 'react-firebase-hooks/auth'
-import { signOut } from "firebase/auth";
 import { auth } from '@/app/utils/firebaseConfig';
 import { useEffect } from 'react';
 import { useRouter } from 'next/navigation';
@@ -35,18 +34,15 @@ const Dashboard = () => {
   }
 
   return (
-    <div className="w-full flex m-3 bg-gray-500 p-4 ">
-    <div className="">
-        {/* <button onClick={() => signOut(auth)} className="bg-zinc-400 px-4 py-2 text-white">Logout</button> */}
-        <div className="bg-slate-400">
+    
+        <div className="bg-slate-400 p-7">
         <h1 className="text-xl">Dashboard</h1>
         <p><strong>User ID:</strong> {user.uid}</p>
         <p><strong>Name:</strong> {user.displayName ? user.displayName : 'no name'}</p>
         <p><strong>Email:</strong> {user.email}</p>
-        </div>
         <Link href={`/profile-management/${user.uid}`} className="text-blue-300">View Profile</Link>
-      </div>
-    </div>
+        </div>
+    
   );
 }
 
