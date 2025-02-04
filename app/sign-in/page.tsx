@@ -41,7 +41,7 @@ const navToSignUp =() => {
     <h1>Sign In</h1>
     <form onSubmit={onSubmit}>
       <div>
-        <label>Email</label>
+        <label>Email* :</label>
         <input
           type='email'
           placeholder='Please enter email'
@@ -52,7 +52,7 @@ const navToSignUp =() => {
         />
       </div>
       <div>
-        <label>Password</label>
+        <label>Password* :</label>
         <input
           type='password'
           placeholder='Please enter email'
@@ -62,7 +62,7 @@ const navToSignUp =() => {
           className='w-full p-3 mb-4 bg-slate-100 rounded outline-none text-slate-950 placeholder-gray-500'
           />
           <div className='flex justify-between'>
-      <button type='submit' className='bg-sky-400'>Sign in</button>
+      <button type='submit' >Sign in</button>
         <button type='button' onClick={navToSignUp}>Need to signed up?</button>
         </div>
         </div>

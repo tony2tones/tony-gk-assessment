@@ -130,21 +130,23 @@ button {
   padding: 0.5rem 1rem;
   border-radius: 8px;
   font-size: 1rem;
-  font-weight: 600;
-  color: #ffffff;
-  background-color: var(--secondary-color);
-  border: none;
+  font-weight: 400;
+  color: black;
+  background-color: #ffffff;
+  border: 1px solid black;
   transition: background 0.3s ease;
 }
 
 input {
   background-color: #ffffff;
+  border: 1px solid black;
   padding: 10px;
   border-radius: 5px;
 }
 
 button:hover {
   background-color: #1d4ed8;
+  color:white;
 }
 
 /* Container */
