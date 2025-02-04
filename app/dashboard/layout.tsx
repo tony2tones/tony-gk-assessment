@@ -1,4 +1,4 @@
-import Header from '@/app/components/navbar';
+import Navbar from '@/app/components/navbar';
 import { FC, ReactNode } from 'react';
 
 interface DashboardLayoutProps {
@@ -8,7 +8,7 @@ interface DashboardLayoutProps {
 const DashboardLayout: FC<DashboardLayoutProps> = ({ children }) => {
   return (
     <div className="flex flex-col flex-1 h-screen">
-      <Header />
+      <Navbar />
       <div className="mt-20">{children}</div>
     </div>
   );

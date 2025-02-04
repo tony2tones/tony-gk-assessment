@@ -17,8 +17,8 @@ const firebase_app = !getApps().length ? initializeApp(firebaseConfig) : getApp(
 export const auth = getAuth(firebase_app);
 export const db = getFirestore(firebase_app);
 
-export const register = (email:string, username:string, password:string) => {
-  return createUserWithEmailAndPassword(auth, email,password).then((response) => updateProfile(response.user, {displayName: username}))
+export const register = (email:string, password:string) => {
+  return createUserWithEmailAndPassword(auth, email,password)
 }
 
 export const login = (email:string, password:string) => {

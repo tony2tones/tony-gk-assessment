@@ -2,7 +2,8 @@
 
 import {FormEvent, useState} from 'react';
 import { useRouter } from 'next/navigation';
-import {login, register} from '../utils/firebaseConfig';
+import {login} from '../utils/firebaseConfig';
+import toast from 'react-hot-toast';
 
 type FirebaseError = {
   code: number;
@@ -17,18 +18,19 @@ type FirebaseError = {
 const SignIn = () => {
   const router = useRouter();
   const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 const onSubmit = async (e:FormEvent) => {
   e.preventDefault();
   try {
     await login(email, password);
+    toast.success('You have successfully logged in');
     router.push('/dashboard');
   } catch (err) {
     const firebaseErrors = err as FirebaseError
     console.log(firebaseErrors.message)
     setErrorMessage(firebaseErrors.message)
+    toast.error(firebaseErrors.message);
   }
 }
 
@@ -47,6 +49,7 @@ const navToSignUp =() => {
           type='email'
           placeholder='Please enter email'
           value={email}
+          required
           onChange={(e) => setEmail(e.target.value)}
           className='w-full p-3 mb-4 bg-slate-100 rounded outline-none text-slate-950 placeholder-gray-500'
         />
@@ -57,6 +60,7 @@ const navToSignUp =() => {
           type='password'
           placeholder='Please enter email'
           value={password}
+          required
           onChange={(e) => setPassword(e.target.value)}
           className='w-full p-3 mb-4 bg-slate-100 rounded outline-none text-slate-950 placeholder-gray-500'
           />

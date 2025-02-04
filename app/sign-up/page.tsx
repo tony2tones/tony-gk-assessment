@@ -16,15 +16,14 @@ type FirebaseError = {
 
 const SignUp = () => {
   const router = useRouter();
-  const [email, setEmail] = useState('');
-  const [username, setUsername] = useState('');
+  const [email, setEmail] = useState('');('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 const onSubmit = async (e:FormEvent) => {
   e.preventDefault();
   console.log('register');
   try {
-    await register(email, username, password);
+    await register(email, password);
     router.push('/');
   } catch (err) {
     const firebaseErrors = err as FirebaseError
