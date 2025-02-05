@@ -42,6 +42,7 @@ export default function ProfilePage() {
           setUserData(null);
         }
       } catch (error) {
+        toast.error(`Additional error infomation ${error}`);
         setUserData(null);
       }
     }
