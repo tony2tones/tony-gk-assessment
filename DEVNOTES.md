@@ -30,7 +30,12 @@ I ran into issues with **hydration** where there was a conflict between **Server
 ### 3. Mocking Firebase in Unit Tests
 Mocking Firebase functions such as `onAuth` and `initializeApp` for my unit tests proved challenging. Jest doesn't naturally support Firebase's methods, so I had to explore different solutions and find a way to mock these functions effectively for testing. Eventually, I used Jest's `mockImplementation` to simulate Firebase functionality, allowing the tests to run without requiring real Firebase interactions.
 
-### 3. Mocking Firebase in Unit Tests
+### 3. Odd styling render behaviour
+Unfortunately, I encountered an issue with TailwindCSS where the styles would reset or behave unexpectedly when I opened the dev tools. Specifically, I noticed that upon opening the dev tools, a hot-reloader would trigger and cause certain styles to "clear," though not the global styles. Some default styles seemed to take precedence, which affected the appearance of my components.
+
+I tried troubleshooting the issue by revisiting the TailwindCSS setup, but was unable to fully resolve it. After some investigation, I discovered that this issue might be linked to how hot-reloading interacts with Tailwind's styles during development. Though the issue went away at some point, it has unfortunately returned.
+
+This was a frustrating challenge, and I wasn't able to pinpoint a permanent fix, but I suspect it could be related to the build or caching behavior.
 
 ---
 
