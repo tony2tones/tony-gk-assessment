@@ -19,11 +19,6 @@ it should look something like this
 
 Once you have your copy of your credentials create a file called .env.local and add it to the base of your route and add the config there.
 
-you can login with the following credentials:
-
-- assessmenttony@gmail.com
-- KineticTest123
-
 ## Install dependencies
 First, run the development server:
 
