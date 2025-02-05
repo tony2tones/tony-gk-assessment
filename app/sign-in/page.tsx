@@ -5,6 +5,7 @@ import { useRouter } from 'next/navigation';
 import { login } from '../utils/firebaseConfig';
 import toast from 'react-hot-toast';
 import { FirebaseError } from '../constants/firebase';
+import { InputField } from '../components/input-field';
 
 const SignIn = () => {
   const router = useRouter();
@@ -32,27 +33,26 @@ const SignIn = () => {
       <div className='flex flex-col gap-1 border '>
         <h1>Sign In</h1>
         <form onSubmit={onSubmit}>
+          <InputField 
+            name='email'
+            type='email'
+            label='Email'
+            placeholder='Please enter email'
+            onChange={setEmail}
+            required={true}
+            value={email}
+          />
+          <InputField 
+            name='password'
+            type='password'
+            label='Password'
+            placeholder='Please enter password'
+            onChange={setPassword}
+            required={true}
+            value={password}
+          />
+          
           <div>
-            <label>Email* :</label>
-            <input
-              type='email'
-              placeholder='Please enter email'
-              value={email}
-              required
-              onChange={(e) => setEmail(e.target.value)}
-              className='w-full p-3 mb-4 bg-slate-100 rounded outline-none text-slate-950 placeholder-gray-500'
-            />
-          </div>
-          <div>
-            <label>Password* :</label>
-            <input
-              type='password'
-              placeholder='Please enter email'
-              value={password}
-              required
-              onChange={(e) => setPassword(e.target.value)}
-              className='w-full p-3 mb-4 bg-slate-100 rounded outline-none text-slate-950 placeholder-gray-500'
-            />
             <div className='flex justify-between'>
               <button type='submit' >Sign in</button>
               <button type='button' onClick={navToSignUp}>Need to signed up?</button>

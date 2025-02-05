@@ -7,6 +7,7 @@ import { db } from "@/app/utils/firebaseConfig";
 import toast from "react-hot-toast";
 import { User } from "../constants/user";
 import { useAuthRedirect } from "../utils/authCheck";
+import { InputField } from "./input-field";
 
 export default function ProfilePage() {
   const { user, loading } = useAuthRedirect();
@@ -94,29 +95,29 @@ export default function ProfilePage() {
         {editMode ? (
           <div className="flex flex-col gap-4 w-96">
             <form onSubmit={handleSubmit}>
-              <div className="flex flex-col">
-                <label>Full Name:</label>
-                <input
+                <InputField
+                label="Full name"
                   type="text"
                   name="fullName"
-                  value={userData?.fullName}
+                  placeholder="please enter full name"
+                  value={userData?.fullName || ''}
                   maxLength={150}
+                  minLength={2}
                   required
-                  onChange={handleChange}
+                  onChange={(value: string) => setUserData((prev) => prev ? { ...prev, fullName: value } : prev)}
                 />
-              </div>
               <br />
-              <div className="flex flex-col">
-                <label>Bio:</label>
-                <input
+              <InputField
+                label="Bio"
                   type="text"
                   name="bio"
-                  value={userData?.bio}
-                  maxLength={200}
+                  placeholder="please enter full name"
+                  value={userData?.bio || ''}
+                  maxLength={150}
+                  minLength={2}
                   required
-                  onChange={handleChange}
+                  onChange={(value: string) => setUserData((prev) => prev ? { ...prev, bio: value } : prev)}
                 />
-              </div>
               <br />
               <button type="submit" className="w-full border-2">
                 {loading ? "Loading please wait" : "Update details"}

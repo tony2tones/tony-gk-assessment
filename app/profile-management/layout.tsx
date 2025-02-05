@@ -1,4 +1,4 @@
-import Navbar from '@/app/components/navbar';
+import Navbar from '@/app/components/nav-bar';
 import { FC, ReactNode } from 'react';
 import '@/app/globals.css';
 
