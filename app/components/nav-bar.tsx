@@ -21,7 +21,7 @@ export default function NavBar() {
     }
   }, [user, loading, router]);
 
-  if (!hydrated) return null; // Prevents SSR from rendering inconsistent UI
+  if (!hydrated) return null; 
 
   return (
     <nav className="w-full bg-white text-black transition h-12 flex items-center px-5 pt-5 0">

@@ -39,11 +39,9 @@ export default function ProfilePage() {
             router.replace("/dashboard");
           }
         } else {
-          console.log("User not found");
           setUserData(null);
         }
       } catch (error) {
-        console.error("Error fetching user:", error);
         setUserData(null);
       }
     }
@@ -106,7 +104,7 @@ export default function ProfilePage() {
                 label="Bio"
                   type="text"
                   name="bio"
-                  placeholder="please enter full name"
+                  placeholder="please enter bio"
                   value={userData?.bio || ''}
                   maxLength={150}
                   minLength={2}
