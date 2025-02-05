@@ -1,21 +1,40 @@
+# Development Notes
 
+## Framework and Libraries Chosen
+For this project, I decided to use the **Next.js** framework, paired with **TailwindCSS** for styling, and **Jest** for testing. Given that I have just started working on a Next.js project internally, I knew this would present some challenges, but I was eager to tackle them.
 
-Decided to go with Next,js framework with tailwindcss and Jest testing framework, I knew that it would be a bit of a challenge seeing that I have just started on a next.js project
-internally.
+### Setup and Initial Development
+The setup process was relatively straightforward. With Next.js handling file-based routing, I could focus on building out the core functionality without worrying too much about complex routing setup. I quickly got up and running with the Next.js build, and development began smoothly.
 
-The builds and setup were quite straight forward and I was developing shortly. Of course nextjs uses its file structure 
-for routing, had to look into how to check if the user's id is still valid to allow access made a reusable function seeing that most
-of the components required auth to either login, update, and get
+One of the early challenges was managing user authentication, particularly ensuring that only authenticated users could access certain parts of the app. To address this, I created a reusable function to check if the user's ID is still valid, as most of the components required authentication to allow actions like logging in, updating, or retrieving data.
 
-broke down components for more modularity and easier management.
+### Modular Approach
+To improve modularity and make the project more maintainable, I broke down the components into smaller, reusable pieces. This approach helped with both readability and management as I scaled the project.
 
-Did have some challenges making a get call to the DB, but a few tutorials later data was officially pulling through
+### Data Fetching with Firebase
+The biggest hurdle during development was retrieving data from Firestore. Initially, I ran into some challenges with making successful GET calls to the database. However, after consulting a few tutorials and reading through the documentation, I was able to implement a working solution, and data was successfully pulling through.
 
-Added utils to hold all firebase related configuration as well as certain function to Register a new user and login with an existing user
+### Firebase Integration
+To manage Firebase authentication and configuration, I created a utility file that handles all Firebase-related setup, including functions to register a new user and log in with an existing one. This utility encapsulates the logic for initializing Firebase and simplifies the authentication flow within the app.
 
-Pain points/ Challenges: 
-Getting Data from the Firestore took a little longer than I had planned
-Had some issues with Hydration where it conflicts between the SSR and client side Rendering
+---
 
-Was struggling to mock out the firebase onAuth and initializeApp functions for my unit tests
+## Pain Points & Challenges
 
+### 1. Retrieving Data from Firestore
+Fetching data from Firestore took a bit longer than I anticipated, as I initially encountered issues with asynchronous data fetching and the Firestore query structure. However, after diving deeper into Firebase's SDK and testing different approaches, I was able to resolve the issues and integrate data fetching seamlessly.
+
+### 2. Hydration Issues
+I ran into issues with **hydration** where there was a conflict between **Server-Side Rendering (SSR)** and **Client-Side Rendering (CSR)**. This resulted in a mismatch between the HTML generated on the server and the one expected by the client. To fix this, I had to review how Next.js handles SSR and CSR and implement conditional rendering based on whether the page is being rendered on the server or the client.
+
+### 3. Mocking Firebase in Unit Tests
+Mocking Firebase functions such as `onAuth` and `initializeApp` for my unit tests proved challenging. Jest doesn't naturally support Firebase's methods, so I had to explore different solutions and find a way to mock these functions effectively for testing. Eventually, I used Jest's `mockImplementation` to simulate Firebase functionality, allowing the tests to run without requiring real Firebase interactions.
+
+### 3. Mocking Firebase in Unit Tests
+
+---
+
+## Conclusion
+Overall, the project has been a great learning experience. Despite the initial challenges with Firebase and SSR hydration, I was able to work through them and build a functioning app with user authentication and data fetching. The decision to go with Next.js and TailwindCSS helped streamline development, and using Jest for unit testing ensured that my app was robust and maintainable.
+
+I'm looking forward to continuing to refine this project and implement more advanced features!
