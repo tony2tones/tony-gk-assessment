@@ -4,7 +4,7 @@ import { FormEvent, useState } from 'react';
 import { useRouter } from 'next/navigation';
 import { login } from '../utils/firebaseConfig';
 import toast from 'react-hot-toast';
-import { FirebaseError } from '../constants/firebase';
+import { FirebaseError } from '../types/firebase';
 import { InputField } from '../components/input-field';
 
 const SignIn = () => {

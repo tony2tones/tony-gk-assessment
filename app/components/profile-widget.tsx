@@ -3,7 +3,7 @@ import { useRouter } from 'next/navigation'
 import { ArrowIcon } from './icons/arrow-icon'
 import Image from 'next/image'
 import profileImage from '@/public/profile.jpg'
-import { widgetDetails } from '../constants/widget-interface'
+import { widgetDetails } from '../types/widget-interface'
 import { useAuthRedirect } from '../utils/authCheck'
 
 const ProfileWidget = ({ uid, email }: widgetDetails) => {

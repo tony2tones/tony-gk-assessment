@@ -1,5 +1,5 @@
 import React from 'react'
-import { InputFieldProps } from '../constants/input-field';
+import { InputFieldProps } from '../types/input-field';
 
 export const InputField = ({
   name,

@@ -5,7 +5,7 @@ import { useParams, useRouter } from "next/navigation";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/app/utils/firebaseConfig";
 import toast from "react-hot-toast";
-import { User } from "../constants/user";
+import { User } from "../types/user";
 import { useAuthRedirect } from "../utils/authCheck";
 import { InputField } from "./input-field";
 
@@ -52,11 +52,6 @@ export default function ProfilePage() {
   }, [slug, user, router]);
 
   const toggleEditMode = () => setEditMode((prev) => !prev);
-
-  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const { name, value } = e.target;
-    setUserData((prev) => (prev ? { ...prev, [name]: value } : prev));
-  };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
