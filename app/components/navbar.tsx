@@ -1,5 +1,5 @@
 'use client';
-import Link from "next/link";
+import { useAuthRedirect } from '../utils/authCheck';
 import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
@@ -7,8 +7,8 @@ import { auth } from "../utils/firebaseConfig";
 import { useRouter } from "next/navigation";
 
 export default function NavBar() {
+  const { user, loading } = useAuthRedirect();
   const router = useRouter();
-  const [user, loading] = useAuthState(auth);
   const [hydrated, setHydrated] = useState(false);
 
   function navToDashboard() {

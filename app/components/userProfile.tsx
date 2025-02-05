@@ -1,22 +1,22 @@
 "use client";
 
 import { FormEvent, useEffect, useState } from "react";
-import { useParams } from "next/navigation";
+import { useParams, useRouter } from "next/navigation";
 import { doc, getDoc, updateDoc } from "firebase/firestore";
 import { db } from "@/app/utils/firebaseConfig";
 import toast from "react-hot-toast";
 import { User } from "../constants/user";
-import {  Loader2 } from "lucide-react";
-
+import { useAuthRedirect } from "../utils/authCheck";
 
 export default function ProfilePage() {
+  const { user, loading } = useAuthRedirect();
+  const router = useRouter();
   const { slug } = useParams() as { slug: string };
   const [userData, setUserData] = useState<User | null>(null);
-  const [loading, setLoading] = useState(true);
   const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
-    if (!slug || Array.isArray(slug)) return;
+    if (!slug || Array.isArray(slug) || !user) return;
 
     async function fetchUser() {
       try {
@@ -31,6 +31,12 @@ export default function ProfilePage() {
             email: userData.email || "",
             bio: userData.bio || "",
           });
+
+          // Prevent users from accessing profiles that aren't theirs
+          if (userSnap.id !== user?.uid) {
+            toast.error("You are not authorized to view this profile.");
+            router.replace("/dashboard");
+          }
         } else {
           console.log("User not found");
           setUserData(null);
@@ -38,13 +44,11 @@ export default function ProfilePage() {
       } catch (error) {
         console.error("Error fetching user:", error);
         setUserData(null);
-      } finally {
-        setLoading(false);
       }
     }
 
     fetchUser();
-  }, [slug]);
+  }, [slug, user, router]);
 
   const toggleEditMode = () => setEditMode((prev) => !prev);
 
@@ -62,9 +66,8 @@ export default function ProfilePage() {
       await updateDoc(userRef, userData);
       toast.success("Your profile has been successfully updated!");
       setEditMode(false);
-
     } catch (error) {
-      toast.error(`An error has occurred updated! ${error}`);
+      toast.error(`An error occurred: ${error}`);
     }
   };
 
@@ -72,7 +75,7 @@ export default function ProfilePage() {
     return (
       <div className="min-h-screen flex items-center justify-center">
         Loading...
-        </div>
+      </div>
     );
   }
 
@@ -85,48 +88,48 @@ export default function ProfilePage() {
   }
 
   return (
-    <section className="h-96 flex flex-col items-center mt-10 ">
-      <div >
-      <h1>Welcome back, {userData?.fullName.split(" ")[0] || 'Name'}</h1>
-      {editMode ? (
-        <div className="flex flex-col gap-4 w-96">
-          <form onSubmit={handleSubmit}>
-            <div className="flex flex-col">
-              <label>Full Name:</label>
-              <input
-                type="text"
-                name="fullName"
-                value={userData?.fullName}
-                maxLength={150}
-                required
-                onChange={handleChange}
-              />
-            </div>
-            <br />
-            <div className="flex flex-col">
-              <label>Bio:</label>
-              <input
-                type="text"
-                name="bio"
-                value={userData?.bio}
-                maxLength={200}
-                required
-                onChange={handleChange}
-              />
-            </div>
-            <br />
-            <button type="submit" className="w-full border-2">
-              {loading ? 'Loading please wait': 'Update details'}
-            </button>
-          </form>
-        </div>
-      ) : (
-        <div className="flex flex-col gap-4 w-96">
-          <p>Name: {userData?.fullName}</p>
-          <p>Bio: {userData?.bio}</p>
-          <button onClick={toggleEditMode}>Update details?</button>
-        </div>
-      )}
+    <section className="h-96 flex flex-col items-center mt-10">
+      <div>
+        <h1>Welcome back, {userData?.fullName.split(" ")[0] || "Name"}</h1>
+        {editMode ? (
+          <div className="flex flex-col gap-4 w-96">
+            <form onSubmit={handleSubmit}>
+              <div className="flex flex-col">
+                <label>Full Name:</label>
+                <input
+                  type="text"
+                  name="fullName"
+                  value={userData?.fullName}
+                  maxLength={150}
+                  required
+                  onChange={handleChange}
+                />
+              </div>
+              <br />
+              <div className="flex flex-col">
+                <label>Bio:</label>
+                <input
+                  type="text"
+                  name="bio"
+                  value={userData?.bio}
+                  maxLength={200}
+                  required
+                  onChange={handleChange}
+                />
+              </div>
+              <br />
+              <button type="submit" className="w-full border-2">
+                {loading ? "Loading please wait" : "Update details"}
+              </button>
+            </form>
+          </div>
+        ) : (
+          <div className="flex flex-col gap-4 w-96">
+            <p>Name: {userData?.fullName}</p>
+            <p>Bio: {userData?.bio}</p>
+            <button onClick={toggleEditMode}>Update details?</button>
+          </div>
+        )}
       </div>
     </section>
   );
