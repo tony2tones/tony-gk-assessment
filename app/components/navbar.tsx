@@ -1,6 +1,5 @@
 'use client';
 import { useAuthRedirect } from '../utils/authCheck';
-import { useAuthState } from "react-firebase-hooks/auth";
 import { signOut } from "firebase/auth";
 import { useEffect, useState } from "react";
 import { auth } from "../utils/firebaseConfig";

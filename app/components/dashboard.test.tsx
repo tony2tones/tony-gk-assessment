@@ -1,23 +1,27 @@
-
 import { render, screen, waitFor } from '@testing-library/react';
 import { useRouter } from 'next/navigation';
 import Dashboard from './dashboard';
 import '@testing-library/jest-dom';
+import { useAuthState } from 'react-firebase-hooks/auth'; // Import the hook
 
 // Mocking the ProfileWidget component
 jest.mock('./profile-widget', () => {
   return jest.fn(() => <div>Profile Widget</div>);
 });
 
-jest.mock('firebase/auth', () => {
-  return {
-    getAuth: jest.fn(),
-    initializeApp: jest.fn(),
-  };
-});
+// Mock Firebase and the hook
+jest.mock('firebase/auth', () => ({
+  getAuth: jest.fn(),
+  initializeApp: jest.fn(),
+}));
 
 // Mock useRouter hook
-jest.mock('next/navigation', () => ({ useRouter: jest.fn()}))
+jest.mock('next/navigation', () => ({ useRouter: jest.fn()}));
+
+// Mock useAuthState
+jest.mock('react-firebase-hooks/auth', () => ({
+  useAuthState: jest.fn(),
+}));
 
 describe('Dashboard Component', () => {
   let mockReplace: jest.Mock;
@@ -26,24 +30,21 @@ describe('Dashboard Component', () => {
     // Set up the mock for useRouter
     mockReplace = jest.fn();
     (useRouter as jest.Mock).mockReturnValue({ replace: mockReplace });
-    
-
-    // Reset mocks before each test
     jest.clearAllMocks();
   });
 
   it('should render loading state initially', () => {
-    // Spy on useAuthState and mock its return value
-    jest.spyOn(require('react-firebase-hooks/auth'), 'useAuthState').mockReturnValue([null, true]);
+    // Mock useAuthState to return loading state
+    (useAuthState as jest.Mock).mockReturnValue([null, true]);
 
     render(<Dashboard />);
 
-    expect(screen.getByText('No data found')).toBeInTheDocument();
+    expect(screen.getByText('Loading...')).toBeInTheDocument();
   });
 
   it('should redirect to sign-in page if no user is authenticated', async () => {
-    // Spy on useAuthState and mock its return value with no user and not loading
-    jest.spyOn(require('react-firebase-hooks/auth'), 'useAuthState').mockReturnValue([null, false]);
+    // Mock useAuthState to return no user, not loading
+    (useAuthState as jest.Mock).mockReturnValue([null, false]);
 
     render(<Dashboard />);
 
@@ -52,9 +53,9 @@ describe('Dashboard Component', () => {
   });
 
   it('should render ProfileWidget when user is authenticated', () => {
-    // Spy on useAuthState and mock an authenticated user
+    // Mock useAuthState to return an authenticated user
     const mockUser = { uid: '123', email: 'test@example.com' };
-    jest.spyOn(require('react-firebase-hooks/auth'), 'useAuthState').mockReturnValue([mockUser, false]);
+    (useAuthState as jest.Mock).mockReturnValue([mockUser, false]);
 
     render(<Dashboard />);
 
@@ -63,8 +64,8 @@ describe('Dashboard Component', () => {
   });
 
   it('should render "No data found" if no user and loading is complete', () => {
-    // Spy on useAuthState and mock no user and not loading
-    jest.spyOn(require('react-firebase-hooks/auth'), 'useAuthState').mockReturnValue([null, false]);
+    // Mock useAuthState to return no user, not loading
+    (useAuthState as jest.Mock).mockReturnValue([null, false]);
 
     render(<Dashboard />);
 

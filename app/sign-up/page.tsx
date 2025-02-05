@@ -16,7 +16,7 @@ type FirebaseError = {
 
 const SignUp = () => {
   const router = useRouter();
-  const [email, setEmail] = useState('');('');
+  const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
 const onSubmit = async (e:FormEvent) => {
@@ -29,7 +29,6 @@ const onSubmit = async (e:FormEvent) => {
     const firebaseErrors = err as FirebaseError
     console.log(firebaseErrors.message)
     setErrorMessage(firebaseErrors.message)
-    // setErrorMessage(err.code);
   }
 }
 
@@ -48,6 +47,7 @@ const navToSignIn =() => {
             type='email'
             placeholder='Please enter email'
             value={email}
+            required
             onChange={(e) => setEmail(e.target.value)}
             className='w-full p-3 mb-4 bg-slate-100 rounded outline-none text-slate-950 placeholder-gray-500'
           />
@@ -58,6 +58,7 @@ const navToSignIn =() => {
             type='password'
             placeholder='Please enter email'
             value={password}
+            required
             onChange={(e) => setPassword(e.target.value)}
             className='w-full p-3 mb-4 bg-slate-100 rounded outline-none text-slate-950 placeholder-gray-500'
             />

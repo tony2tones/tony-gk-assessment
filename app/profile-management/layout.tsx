@@ -1,5 +1,6 @@
 import Navbar from '@/app/components/navbar';
 import { FC, ReactNode } from 'react';
+import '@/app/globals.css';
 
 interface UserManagementLayoutProps {
   children: ReactNode;
