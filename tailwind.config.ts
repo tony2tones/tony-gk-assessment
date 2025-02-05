@@ -1,7 +1,7 @@
 import type { Config } from "tailwindcss";
 
 export default {
-  purge: false, // Temporary for debugging
+  mode: 'jit',
   content: ["./app/**/*.{js,ts,jsx,tsx}",
     "./components/**/*.{js,ts,jsx,tsx}",
   ],

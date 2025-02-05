@@ -4,12 +4,18 @@ import { ArrowIcon } from './icons/arrow-icon'
 import Image from 'next/image'
 import profileImage from '@/public/profile.jpg'
 import { widgetDetails } from '../constants/widget-interface'
+import { useAuthRedirect } from '../utils/authCheck'
 
 const ProfileWidget = ({ uid, email }: widgetDetails) => {
   const router = useRouter();
+  const { user } = useAuthRedirect();
 
   const goToProfile = () => {
     router.push(`/profile-management/${uid}`)
+  }
+
+  if(!user) {
+    return null;
   }
 
   return (
@@ -26,7 +32,7 @@ const ProfileWidget = ({ uid, email }: widgetDetails) => {
         </div>
       </div>
       <div className='flex flex-col hover:border-2 border-sky-700 hover:bg-blue-500 hover:text-slate-100 transition-all duration-300' onClick={goToProfile} >
-        <Image priority className='rounded-md hover:cursor-pointer' src={profileImage} width={230} height={300} alt='Profile figure' />
+        <Image priority style={{ width: "auto", height: "auto" }} className='rounded-md hover:cursor-pointer' src={profileImage} width={230} height={300} alt='Profile figure' />
         <p className='font-normal pt-4 pl-3 hover:cursor-pointer hover:bg-blue-500 text-slate-100'>Click to manage your profile?</p>
       </div>
     </section>
