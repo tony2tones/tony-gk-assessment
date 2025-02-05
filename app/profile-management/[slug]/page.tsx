@@ -1,4 +1,4 @@
-import UserProfile from "@/app/components/userProfile";
+import UserProfile from "@/app/components/user-profile";
 
 export default function Page() {
   return <UserProfile />; 
