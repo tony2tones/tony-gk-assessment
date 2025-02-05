@@ -2,149 +2,141 @@
 @import 'tailwindcss/components';
 @import 'tailwindcss/utilities';
 
-/* Root Variables */
-:root {
-  --background: #ffffff;
-  --foreground: #171717;
-  --primary-color: #2563eb; /* Modern blue for links */
-  --secondary-color: #1e293b; /* Deep gray-blue */
-  --border-color: #e5e7eb; /* Soft gray */
-}
-
-@media (prefers-color-scheme: dark) {
+@layer base {
+  /* Root Variables */
   :root {
-    --background: #0a0a0a;
-    --foreground: #ededed;
-    --primary-color: #3b82f6; /* Lighter blue for dark mode */
-    --secondary-color: #cbd5e1;
-    --border-color: #374151;
+    --background: #ffffff;
+    --foreground: #171717;
+    --primary-color: #2563eb; /* Modern blue for links */
+    --secondary-color: #1e293b; /* Deep gray-blue */
+    --border-color: #e5e7eb; /* Soft gray */
   }
-}
 
-body {
-  font-family: Arial, sans-serif;
-  margin: 0;
-  padding: 0;
-}
+  *,
+  *::before,
+  *::after {
+    box-sizing: border-box;
+  }
 
-/* Mobile styles */
-@media screen and (max-width: 599px) {
-  /* Styles for mobile devices (portrait) */
-  .container {
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+  }
+
+  /* General Styles */
+  body {
+    color: var(--foreground);
+    background: var(--background);
+    font-family: 'Inter', Arial, Helvetica, sans-serif;
+    font-size: 16px;
+    line-height: 1.6;
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+  }
+
+  /* Headings */
+  h1 {
+    font-size: 2.25rem; /* 36px */
+    font-weight: 700;
+    color: var(--foreground);
+    margin-bottom: 1rem;
+  }
+
+  h2 {
+    font-size: 1.875rem; /* 30px */
+    font-weight: 600;
+    color: var(--secondary-color);
+    margin-bottom: 0.75rem;
+  }
+
+  h3 {
+    font-size: 1.5rem; /* 24px */
+    font-weight: 500;
+    color: var(--secondary-color);
+    margin-bottom: 0.5rem;
+  }
+
+  /* Links */
+  a {
+    color: var(--primary-color);
+    text-decoration: none;
+    font-weight: 500;
+    transition: color 0.3s ease;
+  }
+
+  a:hover {
+    color: var(--foreground);
+    text-decoration: underline;
+  }
+
+  /* Paragraphs */
+  p {
+    margin-bottom: 1rem;
+  }
+
+  /* Buttons */
+  button {
+    padding: 0.5rem 1rem;
+    border-radius: 8px;
+    font-size: 1rem;
+    font-weight: 400;
+    color: black;
+    background-color: #ffffff;
+    border: 1px solid black;
+    transition: background 0.3s ease;
+  }
+
+  button:hover {
+    background-color: #1d4ed8;
+    color: white;
+  }
+
+  /* Inputs */
+  input {
+    background-color: #ffffff;
+    border: 1px solid black;
     padding: 10px;
+    border-radius: 5px;
   }
 }
 
-/* Tablet styles */
-@media screen and (min-width: 600px) and (max-width: 899px) {
-  /* Styles for tablets (portrait and landscape) */
+@layer base {
+  /* Responsive Containers */
+  @media screen and (max-width: 599px) {
+    .container {
+      padding: 10px;
+    }
+  }
+
+  @media screen and (min-width: 600px) and (max-width: 899px) {
+    .container {
+      padding: 20px;
+    }
+  }
+
+  @media screen and (min-width: 900px) and (max-width: 1199px) {
+    .container {
+      padding: 30px;
+    }
+  }
+
+  @media screen and (min-width: 1200px) {
+    .container {
+      padding: 40px;
+    }
+  }
+
+  @media screen and (min-width: 1600px) {
+    .container {
+      padding: 50px;
+    }
+  }
+
+  /* Container */
   .container {
-    padding: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 1rem;
   }
-}
-
-/* Laptop styles */
-@media screen and (min-width: 900px) and (max-width: 1199px) {
-  /* Styles for laptops */
-  .container {
-    padding: 30px;
-  }
-}
-
-/* Desktop styles */
-@media screen and (min-width: 1200px) {
-  /* Styles for large desktops */
-  .container {
-    padding: 40px;
-  }
-}
-
-/* Very large desktop (extra-wide screens) */
-@media screen and (min-width: 1600px) {
-  /* Styles for ultra-large screens */
-  .container {
-    padding: 50px;
-  }
-}
-
-/* General Styles */
-body {
-  color: var(--foreground);
-  background: var(--background);
-  font-family: 'Inter', Arial, Helvetica, sans-serif;
-  font-size: 16px;
-  line-height: 1.6;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-}
-
-/* Headings */
-h1 {
-  font-size: 2.25rem; /* 36px */
-  font-weight: 700;
-  color: var(--foreground);
-  margin-bottom: 1rem;
-}
-
-h2 {
-  font-size: 1.875rem; /* 30px */
-  font-weight: 600;
-  color: var(--secondary-color);
-  margin-bottom: 0.75rem;
-}
-
-h3 {
-  font-size: 1.5rem; /* 24px */
-  font-weight: 500;
-  color: var(--secondary-color);
-  margin-bottom: 0.5rem;
-}
-
-/* Links */
-a {
-  color: var(--primary-color);
-  text-decoration: none;
-  font-weight: 500;
-  transition: color 0.3s ease;
-}
-
-a:hover {
-  color: var(--foreground);
-  text-decoration: underline;
-}
-
-/* Paragraphs */
-p {
-  margin-bottom: 1rem;
-}
-
-/* Buttons */
-button {
-  padding: 0.5rem 1rem;
-  border-radius: 8px;
-  font-size: 1rem;
-  font-weight: 400;
-  color: black;
-  background-color: #ffffff;
-  border: 1px solid black;
-  transition: background 0.3s ease;
-}
-
-input {
-  background-color: #ffffff;
-  border: 1px solid black;
-  padding: 10px;
-  border-radius: 5px;
-}
-
-button:hover {
-  background-color: #1d4ed8;
-  color:white;
-}
-
-/* Container */
-.container {
-  max-width: 1200px;
-  margin: 0 auto;
-  padding: 1rem;
 }

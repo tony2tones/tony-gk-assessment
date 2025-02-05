@@ -10,6 +10,9 @@ const nextConfig: NextConfig = {
   appId: process.env.NEXT_PUBLIC_FIREBASE_APP_ID,
 },
 reactStrictMode: true,
+experimental: {
+  scrollRestoration: false,
+},
 };
 
 export default nextConfig;
