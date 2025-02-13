@@ -11,9 +11,11 @@ const SignIn = () => {
   const router = useRouter();
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [loading, setLoading] = useState(false);
 
   const onSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    setLoading(true);
     try {
       await login(email, password);
       toast.success('You have successfully logged in');
@@ -22,6 +24,7 @@ const SignIn = () => {
       const firebaseErrors = err as FirebaseError
       toast.error(firebaseErrors.message);
     }
+    setLoading(false);
   }
 
   const navToSignUp = () => {
@@ -54,8 +57,9 @@ const SignIn = () => {
           
           <div>
             <div className='flex justify-between'>
-              <button type='submit' >Sign in</button>
-              <button type='button' onClick={navToSignUp}>Need to signed up?</button>
+              <button type='submit' disabled={loading} >{loading ? 'Signing in...' : 'Sign in'}</button>
+              
+              <button type='button' disabled={loading} onClick={navToSignUp}> Need to signed up?</button>
             </div>
           </div>
         </form>
