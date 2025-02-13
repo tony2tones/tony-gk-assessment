@@ -13,9 +13,7 @@ before you start make sure you have the following installed:
 before installing node_modules be sure to add your firebase configuration from firebase, this will setup the particular api keys needed to view and edit users
 
 login to [firebase](https://console.firebase.google.com/) and navigate to your project settings:
-
-Once you have your copy of your credentials create a file called .env.local and add it to the route of your project add the config there.
-should have this format
+You should use the following format in your .env.local
 
 ```
 NEXT_PUBLIC_API_KEY=FIREBASE_API_KEY

@@ -8,6 +8,11 @@ module.exports = {
     "./components/**/*.{js,ts,jsx,tsx}", 
   ],
   theme: {
+      screens: {
+        'sm': '776px',
+        'md': '960px',
+        'lg': '1440px',
+      },
     extend: {
       colors: {
         background: "var(--background)",

@@ -36,7 +36,7 @@ const SignIn = () => {
       <div className='flex flex-col gap-1 border '>
         <h1>Sign In</h1>
         <form onSubmit={onSubmit}>
-          <InputField 
+          <InputField
             name='email'
             type='email'
             label='Email'
@@ -45,7 +45,7 @@ const SignIn = () => {
             required={true}
             value={email}
           />
-          <InputField 
+          <InputField
             name='password'
             type='password'
             label='Password'
@@ -54,13 +54,10 @@ const SignIn = () => {
             required={true}
             value={password}
           />
-          
-          <div>
-            <div className='flex justify-between'>
-              <button type='submit' disabled={loading} >{loading ? 'Signing in...' : 'Sign in'}</button>
-              
-              <button type='button' disabled={loading} onClick={navToSignUp}> Need to signed up?</button>
-            </div>
+
+          <div className='flex flex-col sm:flex-row gap-3 justify-between sm:gap-3 sm:justify-start'>
+            <button type='submit' disabled={loading} >{loading ? 'Signing in...' : 'Sign in'}</button>
+            <button type='button' disabled={loading} onClick={navToSignUp}>Need to signed up?</button>
           </div>
         </form>
       </div>
