@@ -8,20 +8,16 @@ import { useRouter } from "next/navigation";
 export default function NavBar() {
   const { user, loading } = useAuthRedirect();
   const router = useRouter();
-  const [hydrated, setHydrated] = useState(false);
 
   function navToDashboard() {
     router.push('/dashboard');
   }
 
   useEffect(() => {
-    setHydrated(true);
     if (!user && !loading) {
-      router.replace("/sign-in");
+      router.push("/sign-in");
     }
   }, [user, loading, router]);
-
-  if (!hydrated) return null; 
 
   return (
     <nav className="w-full bg-white text-black transition h-12 flex items-center px-5 pt-5 0">

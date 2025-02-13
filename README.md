@@ -13,11 +13,19 @@ before you start make sure you have the following installed:
 before installing node_modules be sure to add your firebase configuration from firebase, this will setup the particular api keys needed to view and edit users
 
 login to [firebase](https://console.firebase.google.com/) and navigate to your project settings:
-it should look something like this
 
-![firebase configuration](image.png)
+Once you have your copy of your credentials create a file called .env.local and add it to the route of your project add the config there.
+should have this format
 
-Once you have your copy of your credentials create a file called .env.local and add it to the base of your route and add the config there.
+```
+NEXT_PUBLIC_API_KEY=FIREBASE_API_KEY
+NEXT_PUBLIC_FIREBASE_AUTH_DOMAIN=FIREBASE_AUTH_DOMAIN
+NEXT_PUBLIC_FIREBASE_PROJECT_ID=FIREBASE_PROJECT_ID
+NEXT_PUBLIC_FIREBASE_STORAGE_BUCKET=STORAGE_BUCKET
+NEXT_PUBLIC_FIREBASE_MESSAGE_SENDER_ID=FIREBASE_MESSAGE_SENDER_ID
+NEXT_PUBLIC_FIREBASE_APP_ID=1:FIREBASE_APP_ID
+
+```
 
 ## Install dependencies
 First, run the development server:
